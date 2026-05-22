@@ -33,4 +33,16 @@ const deleteTodo = async (req, res) => {
   res.json({ message: "Deleted" });
 };
 
-export { getTodos, createTodo, getTodoById , deleteTodo };
+const udpateTodo = async (req, res) => {
+  const { title, description, isCompleted, id } = req.body;
+
+  const todo = await Todos.findByIdAndUpdate(id, {
+    title,
+    description,
+    isCompleted,
+  });
+
+  res.json(todo);
+};
+
+export { getTodos, createTodo, getTodoById, deleteTodo, udpateTodo };
