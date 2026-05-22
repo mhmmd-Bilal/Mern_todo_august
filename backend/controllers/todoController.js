@@ -25,4 +25,12 @@ const getTodoById = async (req, res) => {
   res.send(todo);
 };
 
-export { getTodos, createTodo, getTodoById };
+const deleteTodo = async (req, res) => {
+  let { id } = req.query;
+
+  await Todos.findByIdAndDelete(id);
+
+  res.json({ message: "Deleted" });
+};
+
+export { getTodos, createTodo, getTodoById , deleteTodo };
