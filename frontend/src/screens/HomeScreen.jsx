@@ -1,43 +1,41 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AxiosApi from "../axios";
+import {
+  useGetTodosQuery,
+  useCreateTodoMutation,
+} from "../slices/todoApiSlice";
 
 function HomeScreen() {
   // let [stateName,setState] = useState(initial value)
 
-  let [todos, setTodos] = useState([]);
   let [title, setTitle] = useState("");
   let [description, setDescription] = useState("");
 
-  const navigate = useNavigate();
+  const { data: todos, refetch } = useGetTodosQuery();
 
-  const getTodos = async () => {
-    try {
-      let res = await AxiosApi.get("/");
-      setTodos(res.data);
-    } catch (error) {}
-  };
+  const [createTodo] = useCreateTodoMutation();
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      let res = await AxiosApi.post("/create", { title, description });
-      getTodos();
+      let res = await createTodo({ title, description }).unwrap()
+      refetch();
       setTitle("");
       setDescription("");
-    } catch (error) {}
+    } catch (error) {
+      
+    }
   };
 
   const handleDelete = async (id) => {
     try {
       await AxiosApi.delete("/delete", { params: { id } });
-      getTodos();
+      refetch();
     } catch (error) {}
   };
-
-  useEffect(() => {
-    getTodos();
-  }, []);
 
   return (
     <>
