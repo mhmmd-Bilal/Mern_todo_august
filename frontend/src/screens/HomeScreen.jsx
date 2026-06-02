@@ -5,6 +5,7 @@ import {
   useGetTodosQuery,
   useCreateTodoMutation,
 } from "../slices/todoApiSlice";
+import './HomeScreen.css'
 
 function HomeScreen() {
   // let [stateName,setState] = useState(initial value)
@@ -21,13 +22,11 @@ function HomeScreen() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      let res = await createTodo({ title, description }).unwrap()
+      let res = await createTodo({ title, description }).unwrap();
       refetch();
       setTitle("");
       setDescription("");
-    } catch (error) {
-      
-    }
+    } catch (error) {}
   };
 
   const handleDelete = async (id) => {
@@ -38,35 +37,67 @@ function HomeScreen() {
   };
 
   return (
-    <>
-      <div>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="enter todo title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
+   <div className="layout">
+  <aside className="sidebar">
+    <div className="sidebar-header">
+      <h1>Tasks</h1>
+      <p>Create and manage your todos</p>
+    </div>
 
-          <textarea
-            placeholder="enter description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          ></textarea>
+    <form onSubmit={handleSubmit} className="todo-form">
+      <input
+        type="text"
+        placeholder="Task title"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
 
-          <button type="submit">submit</button>
-        </form>
-      </div>
+      <textarea
+        placeholder="Task description"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+      />
 
-      {todos?.map((todo, index) => (
-        <div key={index}>
-          <h1> {todo.title} </h1>
-          <p>{todo.description}</p>
-          <button onClick={() => navigate(`/edit/${todo._id}`)}>edit</button>
-          <button onClick={() => handleDelete(todo._id)}>delete</button>
+      <button className="primary-btn" type="submit">
+        Create Task
+      </button>
+    </form>
+  </aside>
+
+  <main className="content">
+    <div className="content-header">
+      <h2>All Tasks</h2>
+      <span>{todos?.length || 0} Tasks</span>
+    </div>
+
+    <div className="todo-list">
+      {todos?.map((todo) => (
+        <div className="todo-item" key={todo._id}>
+          <div className="todo-info">
+            <h3>{todo.title}</h3>
+            <p>{todo.description}</p>
+          </div>
+
+          <div className="actions">
+            <button
+              className="edit-btn"
+              onClick={() => navigate(`/edit/${todo._id}`)}
+            >
+              Edit
+            </button>
+
+            <button
+              className="delete-btn"
+              onClick={() => handleDelete(todo._id)}
+            >
+              Delete
+            </button>
+          </div>
         </div>
       ))}
-    </>
+    </div>
+  </main>
+</div>
   );
 }
 

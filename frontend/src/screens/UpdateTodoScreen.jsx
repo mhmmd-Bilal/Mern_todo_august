@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import AxiosApi from "../axios";
+import "./UpdateScreen.css";
 
 function UpdateTodoScreen() {
   let [title, setTitle] = useState("");
@@ -24,22 +25,54 @@ function UpdateTodoScreen() {
   }, [id]);
 
   return (
-    <div>
-      <form>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
+    <div className="update-container">
+      <div className="update-card">
+        <div className="card-header">
+          <h1>Edit Task</h1>
+          <p>Update your task details and status</p>
+        </div>
 
-        <textarea
-          placeholder="enter description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        ></textarea>
+        <form className="update-form">
+          <div className="form-group">
+            <label>Task Title</label>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
 
-        <button type="submit">submit</button>
-      </form>
+          <div className="form-group">
+            <label>Description</label>
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            ></textarea>
+          </div>
+
+          <div className="form-group">
+            <label>Status</label>
+
+            <select
+              value={isCompleted.toString()}
+              onChange={(e) => setIsCompleted(e.target.value === "true")}
+            >
+              <option value="false">Pending</option>
+              <option value="true">Completed</option>
+            </select>
+          </div>
+
+          <div className="button-group">
+            <button type="submit" className="save-btn">
+              Save Changes
+            </button>
+
+            <button type="button" className="cancel-btn">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

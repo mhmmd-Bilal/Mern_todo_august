@@ -1,0 +1,182 @@
+:root {
+  --bg: #0f0f10;
+  --panel: #171717;
+  --border: #262626;
+  --hover: #202020;
+  --text: #ffffff;
+  --muted: #9ca3af;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, sans-serif;
+}
+
+/* PAGE */
+
+.update-container {
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 40px;
+}
+
+/* CARD */
+
+.update-card {
+  width: 100%;
+  max-width: 750px;
+
+  background: var(--panel);
+
+  border: 1px solid var(--border);
+  border-radius: 16px;
+
+  padding: 35px;
+}
+
+/* HEADER */
+
+.card-header {
+  margin-bottom: 30px;
+}
+
+.card-header h1 {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.card-header p {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* FORM */
+
+.update-form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-group label {
+  font-size: 14px;
+  color: #d1d5db;
+  font-weight: 500;
+}
+
+/* INPUTS */
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+
+  background: #111;
+  border: 1px solid var(--border);
+
+  color: white;
+  font-size: 15px;
+
+  padding: 14px;
+
+  border-radius: 10px;
+  transition: 0.2s;
+}
+
+.form-group textarea {
+  min-height: 180px;
+  resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #ffffff55;
+}
+
+/* STATUS COLORS */
+
+.form-group select {
+  cursor: pointer;
+}
+
+/* BUTTONS */
+
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+
+  margin-top: 10px;
+}
+
+.save-btn,
+.cancel-btn {
+  border: none;
+  padding: 12px 22px;
+
+  border-radius: 10px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+/* PRIMARY */
+
+.save-btn {
+  background: white;
+  color: black;
+}
+
+.save-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* SECONDARY */
+
+.cancel-btn {
+  background: transparent;
+  color: white;
+  border: 1px solid var(--border);
+}
+
+.cancel-btn:hover {
+  background: var(--hover);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+  .update-container {
+    padding: 20px;
+  }
+
+  .update-card {
+    padding: 25px;
+  }
+
+  .button-group {
+    flex-direction: column;
+  }
+
+  .save-btn,
+  .cancel-btn {
+    width: 100%;
+  }
+}
