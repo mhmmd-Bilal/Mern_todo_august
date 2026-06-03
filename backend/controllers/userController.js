@@ -1,5 +1,6 @@
 import Users from "../model/userModel.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const registerUser = async (req, res) => {
   let { name, email, password } = req.body;
@@ -26,37 +27,35 @@ const registerUser = async (req, res) => {
   }
 };
 
-
-
 const loginUser = async (req, res) => {
   let { email, password } = req.body;
 
   const user = await Users.findOne({ email: email });
 
   if (user && (await user.matchPassword(password))) {
-    // const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-    //   expiresIn: "30d",
-    // });
+    const token = jwt.sign({ userId: user._id }, "fgdsjgsdyjfusa", {
+      expiresIn: "30d",
+    });
 
-    // res.cookie("jwt", token, {
-    //   httpOnly: true,
-    //   secure: true,
-    //   sameSite: "none",
-    //   maxAge: 24 * 60 * 60 * 1000,
-    // });
+    res.cookie("jwt", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
 
-    res.json({ message: "login success", data: {
-      name :user.name,
-      email :user.email,
-      _id :user._id
-    } });
+    res.json({
+      message: "login success",
+      data: {
+        name: user.name,
+        email: user.email,
+        _id: user._id,
+      },
+    });
+    
   } else {
     res.status(404).json({ message: "no accounts matched" });
   }
-}
+};
 
-
-export {
-    registerUser,
-    loginUser
-}
+export { registerUser, loginUser };

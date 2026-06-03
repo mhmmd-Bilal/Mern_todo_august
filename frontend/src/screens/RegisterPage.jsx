@@ -2,12 +2,14 @@ import React from "react";
 import "./RegisterPage.css";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import {useRegisterUserMutation} from "../slices/userApiSlice"
 
 function RegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [registerUser] = useRegisterUserMutation()
 
   const navigate = useNavigate();
 
@@ -15,6 +17,9 @@ function RegisterPage() {
     e.preventDefault();
 
     try {
+
+      let data = await registerUser({name,email,password}).unwrap()
+      navigate('/login')
     } catch (error) {
 
     }

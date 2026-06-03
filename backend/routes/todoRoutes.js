@@ -9,18 +9,19 @@ import {
   deleteTodo,
   udpateTodo,
 } from "../controllers/todoController.js";
+import { protect } from "../middlewares/authMiddleware.js";
 
 // http://localhost:4000/api/todo
-routes.get("/", getTodos);
+routes.get("/",protect, getTodos);
 
 // http://localhost:4000/api/todo/create
-routes.post("/create", createTodo);
+routes.post("/create",protect, createTodo);
 
-routes.get("/:id", getTodoById);
+routes.get("/:id",protect, getTodoById);
 
 // http://localhost:4000/api/todo/delete?id="2848943234c2bc&"
-routes.delete("/delete", deleteTodo);
+routes.delete("/delete",protect, deleteTodo);
 
-routes.patch("/update", udpateTodo);
+routes.patch("/update",protect, udpateTodo);
 
 export default routes;

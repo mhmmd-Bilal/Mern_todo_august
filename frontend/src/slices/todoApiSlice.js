@@ -36,4 +36,4 @@ const todoApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetTodosQuery, useCreateTodoMutation } = todoApiSlice;
+export const { useGetTodosQuery, useCreateTodoMutation ,useDeleteTodoMutation} = todoApiSlice;

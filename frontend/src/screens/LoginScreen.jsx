@@ -2,25 +2,26 @@ import React, { useEffect } from "react";
 import "./LoginPage.css";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useLoginUserMutation } from "../slices/userApiSlice";
 
 function LoginPage() {
-
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [loginUser] = useLoginUserMutation();
 
   const navigate = useNavigate();
 
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
+      let res = await loginUser({ email, password }).unwrap();
 
+      navigate("/");
     } catch (error) {
-
+      console.log(error);
     }
   };
-
 
   return (
     <>
@@ -44,9 +45,7 @@ function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
               />
 
-              <button type="submit">
-              Login
-              </button>
+              <button type="submit">Login</button>
             </form>
 
             <p className="login-footer">
