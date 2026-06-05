@@ -1,26 +1,37 @@
-import HomeScreen from "./screens/HomeScreen"
-import {Routes,Route} from "react-router-dom"
-import LoginScreen from "./screens/LoginScreen"
-import UpdateTodoScreen from "./screens/UpdateTodoScreen"
-import RegisterPage from "./screens/RegisterPage"
+import HomeScreen from "./screens/HomeScreen";
+import { Routes, Route } from "react-router-dom";
+import LoginScreen from "./screens/LoginScreen";
+import UpdateTodoScreen from "./screens/UpdateTodoScreen";
+import RegisterPage from "./screens/RegisterPage";
+import { ToastContainer } from "react-toastify";
 
 function App() {
-
   return (
     <>
-    <Routes>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
 
-      <Route path="/" element={<HomeScreen/>}/>
+      <Routes>
+        <Route path="/" element={<HomeScreen />} />
 
-      <Route path="/login" element={<LoginScreen/>}/>
+        <Route path="/login" element={<LoginScreen />} />
 
-      <Route path="/register" element={<RegisterPage/>}/>
+        <Route path="/register" element={<RegisterPage />} />
 
-      <Route path="/edit/:id" element={<UpdateTodoScreen/>}/>
-
-    </Routes>
+        <Route path="/edit/:id" element={<UpdateTodoScreen />} />
+      </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

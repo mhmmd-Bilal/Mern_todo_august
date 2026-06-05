@@ -7,9 +7,15 @@ import {
   useDeleteTodoMutation,
 } from "../slices/todoApiSlice";
 import "./HomeScreen.css";
+import { useSelector, useDispatch } from "react-redux";
+import { useLogoutUserMutation } from "../slices/userApiSlice";
+import { logout } from "../slices/authSlice";
+import { toast } from "react-toastify";
 
 function HomeScreen() {
   // let [stateName,setState] = useState(initial value)
+
+  const { userData } = useSelector((state) => state.auth);
 
   let [title, setTitle] = useState("");
   let [description, setDescription] = useState("");
@@ -18,17 +24,26 @@ function HomeScreen() {
   const [deleteTodo] = useDeleteTodoMutation();
 
   const [createTodo] = useCreateTodoMutation();
+  const [logoutUser] = useLogoutUserMutation();
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      let res = await createTodo({ title, description }).unwrap();
+      let res = await createTodo({
+        title,
+        description,
+        userId: userData._id,
+      }).unwrap();
       refetch();
       setTitle("");
       setDescription("");
-    } catch (error) {}
+      toast.success("Todo Created");
+    } catch (error) {
+      toast.error("Internal server error");
+    }
   };
 
   const handleDelete = async (id) => {
@@ -38,6 +53,20 @@ function HomeScreen() {
     } catch (error) {}
   };
 
+  const handlelogout = async () => {
+    try {
+      await logoutUser().unwrap();
+      await dispatch(logout());
+      navigate("/login");
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    if (!userData) {
+      navigate("/login");
+    }
+  }, [userData]);
+
   return (
     <div className="layout">
       <aside className="sidebar">
@@ -45,7 +74,6 @@ function HomeScreen() {
           <h1>Tasks</h1>
           <p>Create and manage your todos</p>
         </div>
-
         <form onSubmit={handleSubmit} className="todo-form">
           <input
             type="text"
@@ -64,6 +92,13 @@ function HomeScreen() {
             Create Task
           </button>
         </form>
+        <button
+          className="primary-btn"
+          style={{ marginTop: "10px" }}
+          onClick={handlelogout}
+        >
+          logout
+        </button>{" "}
       </aside>
 
       <main className="content">

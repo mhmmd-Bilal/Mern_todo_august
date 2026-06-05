@@ -1,17 +1,18 @@
 import Todos from "../model/todoModel.js";
 
 const getTodos = async (req, res) => {
-  let todos = await Todos.find();
+  let todos = await Todos.find({ userId: req.user._id });
 
   res.send(todos);
 };
 
 const createTodo = async (req, res) => {
-  let { title, description } = req.body;
+  let { title, description, userId } = req.body;
 
   let todo = await Todos.create({
     title,
     description,
+    userId,
   });
 
   res.send(todo);

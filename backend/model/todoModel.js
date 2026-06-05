@@ -1,20 +1,24 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
 const todoSchema = new mongoose.Schema({
-    title : {
-        type : String,
-        required : true
-    },
-    description : {
-        type : String,
-        required : true
-    },
-    isCompleted : {
-        type : Boolean,
-        default : false
-    }
-})
+  userId: {
+    type: mongoose.Schema.ObjectId,
+    required: true,
+  },
+  title: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  isCompleted: {
+    type: Boolean,
+    default: false,
+  },
+});
 
-const Todos = mongoose.model("todos" , todoSchema)
+const Todos = mongoose.model("todos", todoSchema);
 
-export default Todos
+export default Todos;
